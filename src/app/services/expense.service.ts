@@ -21,9 +21,8 @@ export class ExpenseService {
 			this.selectedDay = day
 		})
 	}
+
 	getExpenses(): Expense[] {
-		console.log(this.selectedDay);
-		
 		if (this.selectedDay && this.selectedDay !== 'SUMMARY') {
 			return this.expenses.filter(expense => expense.day === this.selectedDay);
 		} else if (this.selectedDay === 'SUMMARY') {
@@ -38,14 +37,9 @@ export class ExpenseService {
 	}
 
 	updateExpense(updatedExpense: Expense): void {
-		console.log(updatedExpense);
-		
 		const index = this.expenses.findIndex(exp => exp.id === updatedExpense.id);
-		console.log(index);
 		if (index !== -1) {
 			this.expenses[index] = updatedExpense;
-			console.log(this.expenses[index]);
-			
 			this.updateLocalStorage();
 		}
 	}
