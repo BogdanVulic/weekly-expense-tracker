@@ -1,0 +1,29 @@
+<div [ngClass]="{'flex-column': selectedDay !== 'SUMMARY'}" class="d-flex expense-list">
+		
+	@if (selectedDay === "SUMMARY" && refreshChart) {
+		<ag-charts-angular
+		class="form-control"
+		[options]="options"
+	  ></ag-charts-angular>
+	}
+	<div class="expense-list-wrapper">
+		@for (expense of expenses; track i; let i = $index) {
+		<div class="expense-list-container">
+			@if(!expense.isEditing) {
+				<app-expense-list-item 
+					[expense]="expense" 
+					[selectedDay]="selectedDay" 
+					(delete)="deleteExpense($event)" 
+					(edit)="editExpense($event)"
+				></app-expense-list-item>
+			}
+			@else {
+				<app-expense-entry
+					(updateExpense)="updateExpense($event)"
+					[expense]="expense"
+				></app-expense-entry>
+			}
+		</div>
+		}
+	</div>
+</div>

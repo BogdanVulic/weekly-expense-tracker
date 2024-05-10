@@ -1,0 +1,37 @@
+<form class="form-control expense-entry-form d-flex" [formGroup]="expenseEntryForm">
+	<div class="d-sm-flex justify-content-between align-content-center controls-container">
+
+		@if (expense) {
+			<div class="category-container">
+				<label for="day">Day</label>
+				<select type="select" class="form-control" formControlName="day" name="day" id="day">
+					@for (day of days; track $index) {
+						@if (day !== "SUMMARY") {
+							<option [value]="day">{{day.charAt(0) + day.slice(1).toLowerCase()}}</option>
+						}
+					}
+				</select>
+			</div>
+		}
+
+		<div class="category-container">
+			<label for="category">Category</label>
+			<select type="select" class="form-control" formControlName="category" name="category" id="category">
+				<option value="Bills">Bills</option>
+				<option value="Entertainment">Entertainment</option>
+				<option value="Education">Education</option>
+			</select>
+		</div>
+
+		<div class="amount-container">
+			<label for="amount">Amount</label>
+			<input min="1" class="form-control" type="number" id="amount" formControlName="amount" name="amount">
+		</div>
+
+		<div class="d-flex flex-column btn-conatiner">
+			<button type="button" [disabled]="expenseEntryForm.invalid" id="save-btn" class="btn btn-outline-success" (click)="onSubmit()">Save</button>
+			<button type="button" class="btn btn-outline-danger" id="cancel-btn" (click)="cancel()">Cancel</button>
+		</div>
+	
+	</div>
+</form>

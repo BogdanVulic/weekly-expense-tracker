@@ -1,0 +1,11 @@
+<div class="d-sm-flex justify-content-between form-control expense-list-item">
+	@if (selectedDay === "SUMMARY") {
+		<span class="list-item" >{{ expense.day.charAt(0) + expense.day.slice(1).toLowerCase() }}</span>
+	}
+	<span class="list-item">{{ expense.category }}</span>
+	<span class="list-item">{{ expense.amount }}$</span>
+	<div class="list-item-buttons">
+		<button style="font-size: 12px;" class="btn btn-outline-success" (click)="edit.emit(expense.id)">Edit</button>
+		<button style="font-size: 12px;" class="btn btn-outline-danger" (click)="delete.emit(expense.id)">Delete</button>
+	</div>
+</div>

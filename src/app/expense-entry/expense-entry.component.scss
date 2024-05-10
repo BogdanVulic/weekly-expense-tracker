@@ -1,0 +1,33 @@
+.controls-container {
+  gap: 10px;
+  width: 100%;
+  margin: auto;
+}
+
+.category-container,
+.amount-container {
+  flex: 5;
+}
+
+#save-btn {
+  flex: 1;
+}
+
+.expense-entry-form {
+  height: 120px;
+}
+
+.btn-conatiner{
+	flex: 1.54;
+	gap: 10px;
+
+	button {
+		font-size: 12px;
+	}
+}
+
+@media all and (max-width: 575px) {
+  .expense-entry-form {
+    height: unset;
+  }
+}

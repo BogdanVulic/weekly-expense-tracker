@@ -1,0 +1,46 @@
+.expense-list-container {
+  margin: 10px;
+}
+
+.expense-list-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.expense-list-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.expense-list-wrapper::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.expense-list-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.expense-list-wrapper::-webkit-scrollbar {
+  height: 10px;
+}
+
+.expense-list-wrapper {
+  height: calc(100vh - 210px);
+  overflow: auto;
+  flex: 1;
+  min-width: 48%;
+}
+
+ag-charts-angular {
+  flex: 1;
+  margin: 10px;
+  max-width: 48%;
+}
+
+@media all and (max-width: 1024px) {
+  .expense-list {
+    flex-direction: column;
+  }
+
+  ag-charts-angular {
+    max-width: unset;
+  }
+}

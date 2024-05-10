@@ -1,0 +1,5 @@
+<div class="tabs" appScrollHorizontal style="overflow-x: scroll; white-space: nowrap;">
+	@for (day of days; track $index) {
+	<button style="flex: 1" id="{{day}}" [ngClass]="{'selected': day === selectedDay}" (click)="selectDay(day)">{{ day }}</button>
+	}
+</div>
