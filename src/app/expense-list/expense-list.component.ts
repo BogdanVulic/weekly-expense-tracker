@@ -15,17 +15,17 @@ import { NgClass } from '@angular/common';
 	styleUrl: './expense-list.component.scss'
 })
 export class ExpenseListComponent implements OnInit, DoCheck {
-	@Input() expenses!: Expense[];
+	@Input() expenses: Expense[];
 	@Output() edit = new EventEmitter<number>();
 	@Output() delete = new EventEmitter<string>();
 	@Output() save = new EventEmitter<Expense[]>();
 	@Output() update = new EventEmitter<Expense>();
 
-	expenseListForm!: FormGroup;
-	selectedDay!: string;
+	expenseListForm: FormGroup;
+	selectedDay: string;
 	refreshChart: boolean = true;
 
-	public options!: any;
+	public options: any;
 
 	constructor(public daySelectionService: DaySelectionService) {
 		this.daySelectionService.selectedDay.subscribe(day => {

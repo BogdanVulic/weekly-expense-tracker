@@ -10,8 +10,8 @@ import { Expense } from '../../models/expense.interface';
 })
 export class ExpenseListItemComponent {
 
-	@Input() selectedDay!: string;
-	@Input() expense!: Expense;
+	@Input() selectedDay: string;
+	@Input() expense: Expense;
 	@Output() delete: EventEmitter<string> = new EventEmitter<string>();
 	@Output() edit: EventEmitter<string> = new EventEmitter<string>();
 

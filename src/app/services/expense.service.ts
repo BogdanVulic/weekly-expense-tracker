@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnInit } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Expense } from '../models/expense.interface';
 import { DOCUMENT } from '@angular/common';
 import { DaySelectionService } from './days-selection.service';
@@ -8,7 +8,7 @@ import { DaySelectionService } from './days-selection.service';
 })
 export class ExpenseService {
 	private expenses: Expense[] = [];
-	private selectedDay!: string;
+	private selectedDay: string;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
@@ -21,9 +21,8 @@ export class ExpenseService {
 			this.selectedDay = day
 		})
 	}
+
 	getExpenses(): Expense[] {
-		console.log(this.selectedDay);
-		
 		if (this.selectedDay && this.selectedDay !== 'SUMMARY') {
 			return this.expenses.filter(expense => expense.day === this.selectedDay);
 		} else if (this.selectedDay === 'SUMMARY') {
@@ -38,14 +37,9 @@ export class ExpenseService {
 	}
 
 	updateExpense(updatedExpense: Expense): void {
-		console.log(updatedExpense);
-		
 		const index = this.expenses.findIndex(exp => exp.id === updatedExpense.id);
-		console.log(index);
 		if (index !== -1) {
 			this.expenses[index] = updatedExpense;
-			console.log(this.expenses[index]);
-			
 			this.updateLocalStorage();
 		}
 	}

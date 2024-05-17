@@ -1,37 +1,87 @@
-import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { AfterViewInit, Component, Inject, PLATFORM_ID, TemplateRef, ViewChild } from '@angular/core';
 import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
 import { ExpenseListComponent } from './expense-list/expense-list.component';
 import { TabsComponent } from './tabs/tabs.component';
 import { Expense } from './models/expense.interface';
 import { ExpenseService } from './services/expense.service';
 import { DaySelectionService } from './services/days-selection.service';
-import { NgClass } from '@angular/common';
+import { DOCUMENT, NgClass, isPlatformBrowser } from '@angular/common';
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [RouterOutlet, ExpenseEntryComponent, ExpenseListComponent, TabsComponent, NgClass],
+	imports: [ExpenseEntryComponent, ExpenseListComponent, TabsComponent, NgClass, ReactiveFormsModule],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss'
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
+
+
+	@ViewChild('weeklyBudgetModalRef') weeklyBudgetModalTemplate: TemplateRef<any>;
+	weeklyBudgetModal: NgbModalRef;
 
 	public expenses: Expense[] = [];
-	selectedDay!: string;
+	selectedDay: string;
+	budget: number;
 	isFormActive: boolean = false;
+	weeklyBudgetForm: FormGroup;
 
 	constructor(
+		@Inject(DOCUMENT) private document: Document,
 		private expenseService: ExpenseService,
-		private daysSelectionsService: DaySelectionService
+		private daysSelectionsService: DaySelectionService,
+		private modalService: NgbModal,
+		@Inject(PLATFORM_ID) private platformId: Object
 	) {
+		const localStorage = this.document.defaultView?.localStorage;
+
+		if (localStorage) {
+			this.budget = Number(localStorage.getItem('budget'));
+		}
+		
 		this.fetchExpenses();
 		this.daysSelectionsService.selectedDay.subscribe(day => {
 			this.selectedDay = day;
 			this.handleDaySelection(day);
 		})
+	}
+
+	ngAfterViewInit(): void {
+		if (isPlatformBrowser(this.platformId) && !this.budget) {
+			this.weeklyBudgetModal = this.modalService.open(this.weeklyBudgetModalTemplate, {
+				centered: true,
+				backdrop: 'static',
+				keyboard: false,
+				size: 'md',
+				windowClass: 'largeModal'
+			});
+
+			this.generateForm();
+		}
+	}
+
+	generateForm() {
+		this.weeklyBudgetForm = new FormGroup({
+			'budget': new FormControl(null, Validators.required)
+		})
+	}
+
+	calculateSavings() {
+		if(this.budget) {
+			return Number(this. budget - this.calculateTotal())
+
+		}
+		return 0
+	}
+
+	saveBudget() {
+		this.budget = this.weeklyBudgetForm.controls['budget'].value;
+		localStorage.setItem('budget', this.weeklyBudgetForm.controls['budget'].value)
+		this.weeklyBudgetModal.close();
 	}
 
 	calculateTotal(): number {

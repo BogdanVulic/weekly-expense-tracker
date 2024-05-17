@@ -1,28 +1,50 @@
 <app-tabs>
 </app-tabs>
 
-	<div [ngClass]="{'justify-content-center': selectedDay === 'SUMMARY'}" class="d-flex align-items-center expense-entry">
-		@if (!isFormActive && selectedDay !== "SUMMARY") {
-			<button class="btn btn-primary add-expense-btn" (click)="activateForm()">Add Expense</button>
-		}
-		@if (isFormActive && selectedDay !== "SUMMARY") {
-			<app-expense-entry (isFormActive)="activateForm($event)" (addExpense)="addExpense($event)"></app-expense-entry>
-		}
+<div [ngClass]="{'justify-content-center': selectedDay === 'SUMMARY'}" class="d-flex align-items-center expense-entry">
+	@if (!isFormActive && selectedDay !== "SUMMARY") {
+	<button class="btn btn-primary add-expense-btn" (click)="activateForm()">Add Expense</button>
+	}
+	@if (isFormActive && selectedDay !== "SUMMARY") {
+	<app-expense-entry (isFormActive)="activateForm($event)" (addExpense)="addExpense($event)"></app-expense-entry>
+	}
 
-		@if (selectedDay === 'SUMMARY') {
-			<button class="btn btn-success add-expense-btn" (click)="exportExcel()">Export Excel</button>
+	@if (selectedDay === 'SUMMARY') {
+	<button class="btn btn-success add-expense-btn" (click)="exportExcel()">Export Excel</button>
+	}
+
+	<div class="total-expenses" style="width: unset;text-align: right;">
+		Total: {{ calculateTotal() }}$
+		@if (selectedDay === 'SUMMARY' && calculateSavings() !== 0) {
+			<br>
+			@if (calculateSavings() < 0) {
+				Debt:
+			} 
+			@else {
+				Savings:
+			}
+			{{ calculateSavings() }}$ 
 		}
-		
-		<div class="d-flex total-expenses" style="width: unset;">
-				Total: <br> {{ calculateTotal() }}$
-		</div>
+	 </div>
 	</div>
 
-<div class="expense-list-container">
-	<app-expense-list [expenses]="expenses" (update)="updateExpense($event)" (delete)="deleteExpense($event)">
-	</app-expense-list>
-</div>
+	<div class="expense-list-container">
+		<app-expense-list [expenses]="expenses" (update)="updateExpense($event)" (delete)="deleteExpense($event)">
+		</app-expense-list>
+	</div>
 
-<!-- <ag-grid-angular></ag-grid-angular> -->
+	<ng-template #weeklyBudgetModalRef>
+		<form style="padding: 40px;" class="form-control" [formGroup]="weeklyBudgetForm">
 
-<router-outlet></router-outlet>
+			<div class="d-flex justify-content-between">
+				<div>
+					<input formControlName="budget" min="1" placeholder="weekly budget" class="form-control"
+						type="number" id="budget" name="budget">
+				</div>
+				<div>
+					<button [disabled]="weeklyBudgetForm.invalid" type="button" class="btn btn-outline-primary"
+						(click)="saveBudget()">Save</button>
+				</div>
+			</div>
+		</form>
+	</ng-template>
