@@ -5,7 +5,7 @@
 	<span class="list-item">{{ expense.category }}</span>
 	<span class="list-item">{{ expense.amount }}$</span>
 	<div class="list-item-buttons">
-		<button style="font-size: 12px;" class="btn btn-outline-success" (click)="edit.emit(expense.id)">Edit</button>
-		<button style="font-size: 12px;" class="btn btn-outline-danger" (click)="delete.emit(expense.id)">Delete</button>
+		<button class="btn btn-outline-success" (click)="edit.emit(expense.id)">Edit</button>
+		<button class="btn btn-outline-danger" (click)="delete.emit(expense.id)">Delete</button>
 	</div>
 </div>

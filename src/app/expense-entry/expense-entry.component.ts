@@ -12,15 +12,15 @@ import { DaySelectionService } from '../services/days-selection.service';
 })
 export class ExpenseEntryComponent implements OnInit {
 
-	private selectedDay!: string;
-	private newExpense!: Expense | null;
-	days!: string[];
-	@Input() expense!: Expense | null;
+	private selectedDay: string;
+	private newExpense: Expense | null;
+	days: string[];
+	@Input() expense: Expense | null;
 	@Output() addExpense = new EventEmitter<Expense>();
 	@Output() isFormActive = new EventEmitter<boolean>();
 	@Output() updateExpense = new EventEmitter<Expense>();
 
-	expenseEntryForm!: FormGroup;
+	expenseEntryForm: FormGroup;
 
 	constructor(
 		private daySelectionService: DaySelectionService,

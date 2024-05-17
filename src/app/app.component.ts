@@ -22,14 +22,14 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 export class AppComponent implements AfterViewInit {
 
 
-	@ViewChild('weeklyBudgetModalRef') weeklyBudgetModalTemplate!: TemplateRef<any>;
-	weeklyBudgetModal!: NgbModalRef;
+	@ViewChild('weeklyBudgetModalRef') weeklyBudgetModalTemplate: TemplateRef<any>;
+	weeklyBudgetModal: NgbModalRef;
 
 	public expenses: Expense[] = [];
-	selectedDay!: string;
-	budget!: number;
+	selectedDay: string;
+	budget: number;
 	isFormActive: boolean = false;
-	weeklyBudgetForm!: FormGroup;
+	weeklyBudgetForm: FormGroup;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,

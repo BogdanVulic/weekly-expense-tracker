@@ -1,4 +1,4 @@
-import { Inject, Injectable, OnInit } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Expense } from '../models/expense.interface';
 import { DOCUMENT } from '@angular/common';
 import { DaySelectionService } from './days-selection.service';
@@ -8,7 +8,7 @@ import { DaySelectionService } from './days-selection.service';
 })
 export class ExpenseService {
 	private expenses: Expense[] = [];
-	private selectedDay!: string;
+	private selectedDay: string;
 
 	constructor(
 		@Inject(DOCUMENT) private document: Document,
