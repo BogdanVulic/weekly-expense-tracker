@@ -1,5 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Inject, PLATFORM_ID, TemplateRef, ViewChild } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { AfterViewInit, Component, Inject, PLATFORM_ID, TemplateRef, ViewChild } from '@angular/core';
 import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
 import { ExpenseListComponent } from './expense-list/expense-list.component';
 import { TabsComponent } from './tabs/tabs.component';
@@ -15,7 +14,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 @Component({
 	selector: 'app-root',
 	standalone: true,
-	imports: [RouterOutlet, ExpenseEntryComponent, ExpenseListComponent, TabsComponent, NgClass, ReactiveFormsModule],
+	imports: [ExpenseEntryComponent, ExpenseListComponent, TabsComponent, NgClass, ReactiveFormsModule],
 	templateUrl: './app.component.html',
 	styleUrl: './app.component.scss'
 })
@@ -42,8 +41,6 @@ export class AppComponent implements AfterViewInit {
 
 		if (localStorage) {
 			this.budget = Number(localStorage.getItem('budget'));
-			console.log(this.budget);
-			
 		}
 		
 		this.fetchExpenses();
